@@ -1,0 +1,29 @@
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.content {
+  overflow-y: scroll;
+}
+
+.chats {
+  display: flex;
+  flex-direction: column;
+}
+
+.chats li {
+  display: flex;
+  flex-direction: column;
+}
+
+.chats__mychat {
+  align-items: flex-end;
+}
+
+.chats__content {
+  displaya: flex;
+}

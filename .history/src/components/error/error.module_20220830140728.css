@@ -1,0 +1,20 @@
+@value overBackgroundColor from '../../common/color.css';
+
+.container {
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 100%;
+  width: 100%;
+  background-color: overBackgroundColor;
+}
+
+.error__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}

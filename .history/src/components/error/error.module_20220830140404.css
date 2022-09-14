@@ -1,0 +1,15 @@
+.container {
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 100%;
+  width: 100%;
+}
+
+.error__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
