@@ -1,0 +1,14 @@
+@value mainFontColor from '../../common/color.css';
+
+.empty {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: mainFontColor;
+}
+
+.content {
+  font-size: 2rem;
+}
