@@ -54,15 +54,12 @@ const Chat = ({ chatService, kakaoService }) => {
         return setInputText(value);
     }
   };
-  const onCreated = useCallback(
-    (chat) => {
-      setChats((chats) => [...chats, chat]);
-      console.log('새로운', chat);
-      contentRef.current.scrollIntoView({ block: 'end', inline: 'end' });
-      return;
-    },
-    [chatService]
-  );
+  const onCreated = (chat) => {
+    setChats((chats) => [...chats, chat]);
+    console.log('새로운', chat);
+    contentRef.current.scrollIntoView({ block: 'end', inline: 'end' });
+    return;
+  };
 
   const testMove = (e) => {
     console.log(e);
@@ -75,9 +72,14 @@ const Chat = ({ chatService, kakaoService }) => {
     console.log('emitPos', posSocketData);
     if (nickname != myName) {
       console.log(usersMarkers);
-
+      //기존에 닉네임으로 된 마커가 있다면 지워줌
+      if (usersMarkers[nickname]) {
+        console.log('if 안쪽');
+        usersMarkers[nickname].setMap(null);
+      }
       //location이 있으면 usersMarkers에 저장
       if (location) {
+        console.log(nickname, myName);
         const markerPosition = kakaoService.getLatLng(
           location.latitude,
           location.longitude
@@ -88,12 +90,7 @@ const Chat = ({ chatService, kakaoService }) => {
           nickname
         );
 
-        setUsersMarkers((markers) => {
-          console.log(markers[nickname], 'set안');
-          markers[nickname] && markers[nickname].setMap(null);
-
-          return { ...usersMarkers, [nickname]: marker };
-        });
+        setUsersMarkers({ ...usersMarkers, [nickname]: marker });
       }
     }
   };
@@ -117,7 +114,7 @@ const Chat = ({ chatService, kakaoService }) => {
     console.log('useeffect2');
 
     //파티 아이디랑 닉네임이 업데이트 안되면 종료 소켓연결 x
-    if (!partyid || !myName || !mainMap) {
+    if (!partyid || !myName) {
       console.log('파티아이디가 없음', partyid, myName);
       return;
     }
@@ -127,7 +124,6 @@ const Chat = ({ chatService, kakaoService }) => {
 
     chatService.getChats(partyid).then((data) => {
       setChats([...data]);
-
       contentRef.current.scrollIntoView({ block: 'end', inline: 'end' });
       return;
     });
@@ -140,7 +136,6 @@ const Chat = ({ chatService, kakaoService }) => {
     const position = chatService.onChatSync('pos', (data) => {
       console.log(data);
       console.log(usersMarkers);
-      console.log(chats);
       movePosition(data);
     });
 
@@ -157,7 +152,7 @@ const Chat = ({ chatService, kakaoService }) => {
       disConnect();
       console.log('useEffect1종료');
     };
-  }, [partyid, myName, mainMap]);
+  }, [partyid, myName]);
 
   //처음 지도 셋팅
   useEffect(() => {
@@ -283,7 +278,7 @@ const Chat = ({ chatService, kakaoService }) => {
         />
         <button className={styles.sendBtn}>전송</button>
         {Object.keys(usersMarkers).map((i) => (
-          <div key={i}>{`${usersMarkers[i]}`}</div>
+          <div key={i}>{i}</div>
         ))}
       </form>
     </section>

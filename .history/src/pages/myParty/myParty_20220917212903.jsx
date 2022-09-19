@@ -78,10 +78,8 @@ const MyParty = ({ partyService }) => {
           console.log('파티 x');
           return nav('/partyEmpty');
         }
-        if (mount) {
-          setParty({ ...data });
-          setMemberCount(memberCount);
-        }
+        setParty({ ...data });
+        setMemberCount(memberCount);
       })
       .catch((error) => {
         console.log(error);

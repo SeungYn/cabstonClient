@@ -13,7 +13,7 @@ import Socket from './network/socket';
 import ChatService from './service/chat';
 
 const { kakao } = window;
-const baseURL = 'https://b4c7937b9541fa.lhrtunnel.link'; //'http://192.168.219.102:8080'; //'http://localhost:8080';
+const baseURL = 'https://5691e00905ac78.lhrtunnel.link'; //'http://192.168.219.102:8080'; //'http://localhost:8080';
 const tokenStorage = new TokenStorage();
 const authErrorEventBus = new AuthErrorEventBus();
 const httpClient = new HttpClient(baseURL, authErrorEventBus);

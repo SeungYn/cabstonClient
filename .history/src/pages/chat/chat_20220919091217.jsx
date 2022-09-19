@@ -54,15 +54,12 @@ const Chat = ({ chatService, kakaoService }) => {
         return setInputText(value);
     }
   };
-  const onCreated = useCallback(
-    (chat) => {
-      setChats((chats) => [...chats, chat]);
-      console.log('새로운', chat);
-      contentRef.current.scrollIntoView({ block: 'end', inline: 'end' });
-      return;
-    },
-    [chatService]
-  );
+  const onCreated = (chat) => {
+    setChats((chats) => [...chats, chat]);
+    console.log('새로운', chat);
+    contentRef.current.scrollIntoView({ block: 'end', inline: 'end' });
+    return;
+  };
 
   const testMove = (e) => {
     console.log(e);

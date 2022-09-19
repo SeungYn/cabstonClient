@@ -54,15 +54,12 @@ const Chat = ({ chatService, kakaoService }) => {
         return setInputText(value);
     }
   };
-  const onCreated = useCallback(
-    (chat) => {
-      setChats((chats) => [...chats, chat]);
-      console.log('새로운', chat);
-      contentRef.current.scrollIntoView({ block: 'end', inline: 'end' });
-      return;
-    },
-    [chatService]
-  );
+  const onCreated = (chat) => {
+    setChats((chats) => [...chats, chat]);
+    console.log('새로운', chat);
+    contentRef.current.scrollIntoView({ block: 'end', inline: 'end' });
+    return;
+  };
 
   const testMove = (e) => {
     console.log(e);
@@ -75,9 +72,17 @@ const Chat = ({ chatService, kakaoService }) => {
     console.log('emitPos', posSocketData);
     if (nickname != myName) {
       console.log(usersMarkers);
-
+      //기존에 닉네임으로 된 마커가 있다면 지워줌
+      if (usersMarkers[nickname]) {
+        console.log('if 안쪽');
+        console.log(usersMarkers[nickname]);
+        //usersMarkers[nickname].setMap(null);
+      }
       //location이 있으면 usersMarkers에 저장
       if (location) {
+        console.log(nickname, myName);
+        console.log(location);
+        console.log('위치재설정');
         const markerPosition = kakaoService.getLatLng(
           location.latitude,
           location.longitude
@@ -87,11 +92,12 @@ const Chat = ({ chatService, kakaoService }) => {
           mainMap,
           nickname
         );
-
+        console.log('mainmap', mainMap);
+        console.log(usersMarkers);
+        console.log({ ...usersMarkers, [nickname]: marker });
         setUsersMarkers((markers) => {
           console.log(markers[nickname], 'set안');
-          markers[nickname] && markers[nickname].setMap(null);
-
+          //markers[nickname] && usersMarkers[nickname].setMap(null);
           return { ...usersMarkers, [nickname]: marker };
         });
       }
