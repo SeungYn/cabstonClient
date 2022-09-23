@@ -76,7 +76,6 @@ const Chat = ({ chatService, kakaoService }) => {
   const onDragStartHandler = (e) => {
     posX = e.pageX;
     posY = e.clientY;
-    console.log(mapContainerRef.current.getBoundingClientRect().top);
     shiftX = e.pageX - mapContainerRef.current.getBoundingClientRect().left;
     shiftY = e.clientY - mapContainerRef.current.getBoundingClientRect().top;
   };
@@ -114,7 +113,7 @@ const Chat = ({ chatService, kakaoService }) => {
 
     mapContainerRef.current.style.left = `${moveX}px`;
     mapContainerRef.current.style.top = `${moveY}px`;
-
+    console.log(moveY);
     posX = e.pageX;
     posY = e.clientY;
   };

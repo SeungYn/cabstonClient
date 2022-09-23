@@ -75,10 +75,9 @@ const Chat = ({ chatService, kakaoService }) => {
 
   const onDragStartHandler = (e) => {
     posX = e.pageX;
-    posY = e.clientY;
-    console.log(mapContainerRef.current.getBoundingClientRect().top);
+    posY = e.pageY;
     shiftX = e.pageX - mapContainerRef.current.getBoundingClientRect().left;
-    shiftY = e.clientY - mapContainerRef.current.getBoundingClientRect().top;
+    shiftY = e.pageY - mapContainerRef.current.getBoundingClientRect().top;
   };
 
   //항상 맵 중앙에 위치하기 때문에 부모의 left 값을 뺴줘야함 지도는 absolute라서 부모의 0부터 시작
@@ -114,7 +113,7 @@ const Chat = ({ chatService, kakaoService }) => {
 
     mapContainerRef.current.style.left = `${moveX}px`;
     mapContainerRef.current.style.top = `${moveY}px`;
-
+    console.log(moveY);
     posX = e.pageX;
     posY = e.clientY;
   };

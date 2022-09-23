@@ -85,7 +85,7 @@ const Chat = ({ chatService, kakaoService }) => {
   const onDragHeandler = (e) => {
     e.preventDefault();
     let moveX = posX - shiftX - mapParent.current.getBoundingClientRect().left;
-    let moveY = posY - shiftY - mapParent.current.getBoundingClientRect().top;
+    let moveY = posY - shiftY;
     if (
       moveX + mapContainerRef.current.getBoundingClientRect().width >
       mapParent.current.getBoundingClientRect().width

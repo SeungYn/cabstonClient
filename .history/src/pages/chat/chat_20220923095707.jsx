@@ -69,54 +69,22 @@ const Chat = ({ chatService, kakaoService }) => {
 
   //마우스 이벤트 부분
   let posX,
-    posY,
-    shiftX,
-    shiftY = 0; //시작 위치
+    posY = 0; //마지막 위치
 
   const onDragStartHandler = (e) => {
-    posX = e.pageX;
+    posX = e.clientX;
     posY = e.clientY;
-    console.log(mapContainerRef.current.getBoundingClientRect().top);
-    shiftX = e.pageX - mapContainerRef.current.getBoundingClientRect().left;
-    shiftY = e.clientY - mapContainerRef.current.getBoundingClientRect().top;
   };
 
   //항상 맵 중앙에 위치하기 때문에 부모의 left 값을 뺴줘야함 지도는 absolute라서 부모의 0부터 시작
   const onDragHeandler = (e) => {
-    e.preventDefault();
-    let moveX = posX - shiftX - mapParent.current.getBoundingClientRect().left;
-    let moveY = posY - shiftY - mapParent.current.getBoundingClientRect().top;
-    if (
-      moveX + mapContainerRef.current.getBoundingClientRect().width >
-      mapParent.current.getBoundingClientRect().width
-    ) {
-      moveX =
-        mapParent.current.getBoundingClientRect().width -
-        mapContainerRef.current.getBoundingClientRect().width;
-    }
+    const shiftX = posX - mapContainerRef.current.getBoundingClientRect().left;
 
-    if (
-      moveY + mapContainerRef.current.getBoundingClientRect().height >
-      mapParent.current.getBoundingClientRect().height
-    ) {
-      moveY =
-        mapParent.current.getBoundingClientRect().height -
-        mapContainerRef.current.getBoundingClientRect().height;
-    }
-
-    if (moveX < 0) {
-      moveX = 0;
-    }
-
-    if (moveY < 0) {
-      moveY = 0;
-    }
-
-    mapContainerRef.current.style.left = `${moveX}px`;
-    mapContainerRef.current.style.top = `${moveY}px`;
-
-    posX = e.pageX;
-    posY = e.clientY;
+    mapContainerRef.current.style.left = `${
+      posX - shiftX - mapParent.current.getBoundingClientRect().left
+    }px`;
+    console.log(posX, shiftX, mapParent.current.getBoundingClientRect().left);
+    posX = e.clientX;
   };
 
   //socket으로 닉네임이랑 위치를 받아옴

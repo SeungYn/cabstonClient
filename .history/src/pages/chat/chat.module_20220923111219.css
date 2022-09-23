@@ -81,7 +81,6 @@
   flex-direction: column;
   top: 0;
   left: 0;
-  border: 1px solid mainFontColor;
 }
 
 .map__map {
@@ -91,5 +90,5 @@
 }
 
 .map__header {
-  background: white;
+  background: black;
 }

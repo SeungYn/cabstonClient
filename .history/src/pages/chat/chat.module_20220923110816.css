@@ -6,7 +6,6 @@
   justify-content: space-between;
   overflow: hidden;
   background-color: tondownMainFontColor;
-  position: relative;
 }
 
 .content {
@@ -79,9 +78,7 @@
   position: absolute;
   display: flex;
   flex-direction: column;
-  top: 0;
-  left: 0;
-  border: 1px solid mainFontColor;
+  top 0 ;
 }
 
 .map__map {
@@ -91,5 +88,5 @@
 }
 
 .map__header {
-  background: white;
+  background: black;
 }
