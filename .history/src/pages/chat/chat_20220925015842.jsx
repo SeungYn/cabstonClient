@@ -233,7 +233,7 @@ const Chat = ({ chatService, kakaoService }) => {
     );
     //메인지도
     const map = kakaoService.getNewMap(mapContainer, mapOption);
-    setMainMap(map);
+    //setMainMap(map);
     const markerPosition = kakaoService.getLatLng(
       firstLocation2.latitude,
       firstLocation2.longitude

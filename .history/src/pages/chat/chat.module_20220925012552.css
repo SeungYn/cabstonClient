@@ -76,6 +76,9 @@
 /* 지도 부분 */
 
 .map__Container {
+}
+.map__on {
+  display: flex;
   z-index: 10;
   resize: both;
   width: 50%;
@@ -87,9 +90,6 @@
   top: 0;
   left: 0;
   border: 1px solid mainFontColor;
-}
-.map__on {
-  display: flex;
 }
 
 .map__off {

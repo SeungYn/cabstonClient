@@ -71,7 +71,6 @@ const Chat = ({ chatService, kakaoService }) => {
   );
 
   const onMapView = useCallback(() => setMapSwitch(true), [mapSwitch]);
-  const onMapClose = useCallback(() => setMapSwitch(false), [mapSwitch]);
   //지도 출력부분
 
   //마우스 이벤트 부분
@@ -81,34 +80,34 @@ const Chat = ({ chatService, kakaoService }) => {
     shiftY = 0; //시작 위치
 
   const onDragStartHandler = (e) => {
-    const { left, top } = mapContainerRef.current.getBoundingClientRect();
     posX = e.pageX;
     posY = e.clientY;
-    shiftX = e.pageX - left;
-    shiftY = e.clientY - top;
+    console.log(mapContainerRef.current.getBoundingClientRect().top);
+    shiftX = e.pageX - mapContainerRef.current.getBoundingClientRect().left;
+    shiftY = e.clientY - mapContainerRef.current.getBoundingClientRect().top;
   };
 
   //항상 맵 중앙에 위치하기 때문에 부모의 left 값을 뺴줘야함 지도는 absolute라서 부모의 0부터 시작
   const onDragHeandler = (e) => {
     e.preventDefault();
-    const {
-      left: mapParentLeft,
-      top: mapParentTop,
-      width: mapParentWidth,
-      height: mapParentHeight,
-    } = mapParent.current.getBoundingClientRect();
-
-    const { width: mapContainerWidth, height: mapContainerHeight } =
-      mapContainerRef.current.getBoundingClientRect();
-
-    let moveX = posX - shiftX - mapParentLeft;
-    let moveY = posY - shiftY - mapParentTop;
-    if (moveX + mapContainerWidth > mapParentWidth) {
-      moveX = mapParentWidth - mapContainerWidth;
+    let moveX = posX - shiftX - mapParent.current.getBoundingClientRect().left;
+    let moveY = posY - shiftY - mapParent.current.getBoundingClientRect().top;
+    if (
+      moveX + mapContainerRef.current.getBoundingClientRect().width >
+      mapParent.current.getBoundingClientRect().width
+    ) {
+      moveX =
+        mapParent.current.getBoundingClientRect().width -
+        mapContainerRef.current.getBoundingClientRect().width;
     }
 
-    if (moveY + mapContainerHeight > mapParentHeight) {
-      moveY = mapParentHeight - mapContainerHeight;
+    if (
+      moveY + mapContainerRef.current.getBoundingClientRect().height >
+      mapParent.current.getBoundingClientRect().height
+    ) {
+      moveY =
+        mapParent.current.getBoundingClientRect().height -
+        mapContainerRef.current.getBoundingClientRect().height;
     }
 
     if (moveX < 0) {
@@ -128,29 +127,29 @@ const Chat = ({ chatService, kakaoService }) => {
 
   //socket으로 닉네임이랑 위치를 받아옴
   const movePosition = (posSocketData) => {
-    const { location } = posSocketData;
-    const nickname = posSocketData.nickname.toString();
-    console.log('emitPos', posSocketData);
-    if (nickname != myName) {
-      console.log(usersMarkers);
-      //location이 있으면 usersMarkers에 저장
-      if (location) {
-        const markerPosition = kakaoService.getLatLng(
-          location.latitude,
-          location.longitude
-        );
-        const marker = kakaoService.getMapMarker(
-          markerPosition,
-          mainMap,
-          nickname
-        );
-        setUsersMarkers((markers) => {
-          console.log(markers[nickname], 'set안');
-          markers[nickname] && markers[nickname].setMap(null);
-          return { ...usersMarkers, [nickname]: marker };
-        });
-      }
-    }
+    // const { location } = posSocketData;
+    // const nickname = posSocketData.nickname.toString();
+    // console.log('emitPos', posSocketData);
+    // if (nickname != myName) {
+    //   console.log(usersMarkers);
+    //   //location이 있으면 usersMarkers에 저장
+    //   if (location) {
+    //     const markerPosition = kakaoService.getLatLng(
+    //       location.latitude,
+    //       location.longitude
+    //     );
+    //     const marker = kakaoService.getMapMarker(
+    //       markerPosition,
+    //       mainMap,
+    //       nickname
+    //     );
+    //     setUsersMarkers((markers) => {
+    //       console.log(markers[nickname], 'set안');
+    //       markers[nickname] && markers[nickname].setMap(null);
+    //       return { ...usersMarkers, [nickname]: marker };
+    //     });
+    //   }
+    // }
   };
 
   useEffect(() => {
@@ -220,7 +219,7 @@ const Chat = ({ chatService, kakaoService }) => {
     // if (!agree) {
     //   return;
     // }
-    if (!firstLocation2 || !partyid || !myName || !mapSwitch) {
+    if (!firstLocation2 || !partyid || !myName) {
       console.log('지도 종료');
       return;
     }
@@ -233,7 +232,7 @@ const Chat = ({ chatService, kakaoService }) => {
     );
     //메인지도
     const map = kakaoService.getNewMap(mapContainer, mapOption);
-    setMainMap(map);
+    //setMainMap(map);
     const markerPosition = kakaoService.getLatLng(
       firstLocation2.latitude,
       firstLocation2.longitude
@@ -244,12 +243,12 @@ const Chat = ({ chatService, kakaoService }) => {
     return () => {
       console.log('useEffect2종료');
     };
-  }, [agree, firstLocation2, partyid, myName, !mapSwitch]);
+  }, [agree, firstLocation2, partyid, myName]);
 
   //실시간 위치추적
   useEffect(() => {
     console.log('움직임');
-    if (!firstLocation2 || !partyid || !myName || !mapSwitch) {
+    if (!firstLocation2 || !partyid || !myName) {
       return;
     }
     if (location && mainMap) {
@@ -267,7 +266,7 @@ const Chat = ({ chatService, kakaoService }) => {
     return () => {
       console.log('실기간 위치추적 종료');
     };
-  }, [location, firstLocation2, partyid, myName, !mapSwitch]);
+  }, [location, firstLocation2, partyid, myName]);
 
   return (
     <section ref={mapParent} className={`${styles.container}`}>
@@ -283,9 +282,7 @@ const Chat = ({ chatService, kakaoService }) => {
           onDrag={onDragHeandler}
           draggable={true}
         >
-          <button className={styles.map__closeBtn} onClick={onMapClose}>
-            닫기
-          </button>
+          <button className={styles.map__closeBtn}>닫기</button>
         </div>
         <div ref={mapRef} className={styles.map__map}></div>
       </div>

@@ -71,7 +71,6 @@ const Chat = ({ chatService, kakaoService }) => {
   );
 
   const onMapView = useCallback(() => setMapSwitch(true), [mapSwitch]);
-  const onMapClose = useCallback(() => setMapSwitch(false), [mapSwitch]);
   //지도 출력부분
 
   //마우스 이벤트 부분
@@ -98,17 +97,27 @@ const Chat = ({ chatService, kakaoService }) => {
       height: mapParentHeight,
     } = mapParent.current.getBoundingClientRect();
 
-    const { width: mapContainerWidth, height: mapContainerHeight } =
-      mapContainerRef.current.getBoundingClientRect();
-
+    const {
+      width: mapContainerWidth,
+      height: mapContainerHeight
+    }
     let moveX = posX - shiftX - mapParentLeft;
     let moveY = posY - shiftY - mapParentTop;
-    if (moveX + mapContainerWidth > mapParentWidth) {
-      moveX = mapParentWidth - mapContainerWidth;
+    if (
+      moveX + mapContainerRef.current.getBoundingClientRect().width >
+      mapParentWidth
+    ) {
+      moveX =
+        mapParentWidth - mapContainerRef.current.getBoundingClientRect().width;
     }
 
-    if (moveY + mapContainerHeight > mapParentHeight) {
-      moveY = mapParentHeight - mapContainerHeight;
+    if (
+      moveY + mapContainerRef.current.getBoundingClientRect().height >
+      mapParentHeight
+    ) {
+      moveY =
+        mapParentHeight -
+        mapContainerRef.current.getBoundingClientRect().height;
     }
 
     if (moveX < 0) {
@@ -128,29 +137,29 @@ const Chat = ({ chatService, kakaoService }) => {
 
   //socket으로 닉네임이랑 위치를 받아옴
   const movePosition = (posSocketData) => {
-    const { location } = posSocketData;
-    const nickname = posSocketData.nickname.toString();
-    console.log('emitPos', posSocketData);
-    if (nickname != myName) {
-      console.log(usersMarkers);
-      //location이 있으면 usersMarkers에 저장
-      if (location) {
-        const markerPosition = kakaoService.getLatLng(
-          location.latitude,
-          location.longitude
-        );
-        const marker = kakaoService.getMapMarker(
-          markerPosition,
-          mainMap,
-          nickname
-        );
-        setUsersMarkers((markers) => {
-          console.log(markers[nickname], 'set안');
-          markers[nickname] && markers[nickname].setMap(null);
-          return { ...usersMarkers, [nickname]: marker };
-        });
-      }
-    }
+    // const { location } = posSocketData;
+    // const nickname = posSocketData.nickname.toString();
+    // console.log('emitPos', posSocketData);
+    // if (nickname != myName) {
+    //   console.log(usersMarkers);
+    //   //location이 있으면 usersMarkers에 저장
+    //   if (location) {
+    //     const markerPosition = kakaoService.getLatLng(
+    //       location.latitude,
+    //       location.longitude
+    //     );
+    //     const marker = kakaoService.getMapMarker(
+    //       markerPosition,
+    //       mainMap,
+    //       nickname
+    //     );
+    //     setUsersMarkers((markers) => {
+    //       console.log(markers[nickname], 'set안');
+    //       markers[nickname] && markers[nickname].setMap(null);
+    //       return { ...usersMarkers, [nickname]: marker };
+    //     });
+    //   }
+    // }
   };
 
   useEffect(() => {
@@ -233,7 +242,7 @@ const Chat = ({ chatService, kakaoService }) => {
     );
     //메인지도
     const map = kakaoService.getNewMap(mapContainer, mapOption);
-    setMainMap(map);
+    //setMainMap(map);
     const markerPosition = kakaoService.getLatLng(
       firstLocation2.latitude,
       firstLocation2.longitude
@@ -283,9 +292,7 @@ const Chat = ({ chatService, kakaoService }) => {
           onDrag={onDragHeandler}
           draggable={true}
         >
-          <button className={styles.map__closeBtn} onClick={onMapClose}>
-            닫기
-          </button>
+          <button className={styles.map__closeBtn}>닫기</button>
         </div>
         <div ref={mapRef} className={styles.map__map}></div>
       </div>

@@ -11,7 +11,6 @@
 
 .content {
   overflow-y: scroll;
-  position: relative;
 }
 
 .chats {
@@ -47,7 +46,6 @@
 }
 
 .inputBar {
-  position: relative;
   display: flex;
   height: 10%;
 }
@@ -69,11 +67,11 @@
   color: white;
 }
 
-.mapBtn {
-  cursor: pointer;
-}
-
 /* 지도 부분 */
+
+.map__on {
+  display: flex;
+}
 
 .map__Container {
   z-index: 10;
@@ -83,15 +81,12 @@
   max-width: 600px;
   overflow: auto;
   position: absolute;
+  display: flex;
   flex-direction: column;
   top: 0;
   left: 0;
   border: 1px solid mainFontColor;
 }
-.map__on {
-  display: flex;
-}
-
 .map__off {
   display: none;
 }

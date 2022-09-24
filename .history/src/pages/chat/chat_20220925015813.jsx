@@ -233,7 +233,7 @@ const Chat = ({ chatService, kakaoService }) => {
     );
     //메인지도
     const map = kakaoService.getNewMap(mapContainer, mapOption);
-    setMainMap(map);
+    //setMainMap(map);
     const markerPosition = kakaoService.getLatLng(
       firstLocation2.latitude,
       firstLocation2.longitude
@@ -283,9 +283,7 @@ const Chat = ({ chatService, kakaoService }) => {
           onDrag={onDragHeandler}
           draggable={true}
         >
-          <button className={styles.map__closeBtn} onClick={onMapClose}>
-            닫기
-          </button>
+          <button className={styles.map__closeBtn}>닫기</button>
         </div>
         <div ref={mapRef} className={styles.map__map}></div>
       </div>

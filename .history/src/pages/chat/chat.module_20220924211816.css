@@ -47,7 +47,6 @@
 }
 
 .inputBar {
-  position: relative;
   display: flex;
   height: 10%;
 }
@@ -69,10 +68,6 @@
   color: white;
 }
 
-.mapBtn {
-  cursor: pointer;
-}
-
 /* 지도 부분 */
 
 .map__Container {
@@ -83,6 +78,7 @@
   max-width: 600px;
   overflow: auto;
   position: absolute;
+
   flex-direction: column;
   top: 0;
   left: 0;
