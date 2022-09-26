@@ -1,0 +1,77 @@
+@value mainFontColor,buttonFontColor from '../../common/color.css';
+
+.myParty__container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.btnGroup {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 5%;
+}
+
+.btnGroup__btn {
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.4rem 0.8rem;
+  background-color: white;
+  border: 1px solid mainFontColor;
+  border-radius: 10px;
+  color: mainFontColor;
+  width: 100%;
+  height: 100%;
+  font-size: 2rem;
+}
+
+.report {
+  height: 100%;
+  flex-basis: 50%;
+  position: relative;
+}
+
+.unReady__btn {
+  height: 100%;
+  background-color: black;
+}
+
+.btnGroup__right {
+  display: flex;
+  flex-basis: 50%;
+}
+
+.btnGroup__btn:hover {
+  background-color: mainFontColor;
+  color: white;
+}
+
+.btnGroup__btn:first-child {
+}
+/* 파티정보 */
+
+.myParty__middle {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  margin-bottom: 0.5rem;
+  align-items: center;
+  flex-basis: 20%;
+}
+
+.partyInfo {
+  border: 1px solid mainFontColor;
+  padding: 0.2rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-basis: 50%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.party__info {
+  margin: 0;
+  color: mainFontColor;
+}
